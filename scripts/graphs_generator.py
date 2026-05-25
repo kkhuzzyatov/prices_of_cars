@@ -16,6 +16,7 @@ PLOTS_DIR = BASE_DIR / "plots"
 DENSITY_DIR = PLOTS_DIR / "density"
 DIST_DIR = PLOTS_DIR / "distribution"
 SCATTER_DIR = PLOTS_DIR / "scatter"
+CDF_DIR = PLOTS_DIR / "cdf"
 
 # Загрузка данных
 df = pd.read_csv(DATA_PATH)
@@ -103,6 +104,28 @@ for col in num_df.columns:
     plt.tight_layout()
 
     plt.savefig(DIST_DIR / f"distribution_{safe_filename(col)}.png", dpi=300)
+    plt.close()
+
+# CDF
+for col in num_df.columns:
+    series = num_df[col].dropna().sort_values()
+
+    if series.empty or series.nunique() < 2:
+        continue
+
+    plt.figure(figsize=(6, 4))
+
+    y = series.rank(method="first") / len(series)
+
+    plt.plot(series.values, y.values, linewidth=2)
+
+    plt.title(f"CDF - {col}")
+    plt.xlabel(col)
+    plt.ylabel("F(x)")
+    plt.grid(alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(CDF_DIR / f"cdf_{safe_filename(col)}.png", dpi=300)
     plt.close()
 
 # Boxplots

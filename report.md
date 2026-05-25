@@ -47,6 +47,9 @@ https://www.kaggle.com/datasets/sukhmandeepsinghbrar/car-price-prediction-datase
 Распределения:
 [distribution](./plots/distribution)
 
+Cdfs:
+[cdfs](./plots/cdfs)
+
 Также были построены диаграммы рассеяния:
 
 - `./plots/scatter`
