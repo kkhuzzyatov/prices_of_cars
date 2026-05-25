@@ -114,6 +114,8 @@ Cdfs:
 
 ## 8. Модель линейной регрессии
 
+### Базовая модель
+
 На очищенных данных была обучена модель линейной регрессии (`LinearRegression` из sklearn) для предсказания цены автомобиля на основе:
 
 - года выпуска  
@@ -131,10 +133,59 @@ Cdfs:
 
 ---
 
-## 9. Итоговая модель
+### Расширенная модель
+
+После анализа результатов было принято решение расширить набор признаков.
+
+В итоговую модель были добавлены:
+
+#### Числовые признаки
+- year
+- engine
+- km_driven
+- max_power
+
+#### Категориальные признаки
+- fuel
+- seller_type
+- transmission
+- owner
+
+Для обработки категориальных признаков использовался `OneHotEncoder`.
+
+Качество расширенной модели:
+
+- Доля объяснённой дисперсии (R²): **68.9%**
+
+По сравнению с базовой моделью качество существенно улучшилось, что показывает значительное влияние дополнительных признаков на стоимость автомобиля.
+
+Логика обучения расширенной модели:  
+[train_with_all_parameters.py](./scripts/train_with_all_parameters.py)
+
+Отчёт по расширенной модели:  
+[linear_regression_report_with_all_parameters.md](./generated_reports/linear_regression_report_with_all_parameters.md)
+
+---
+
+## 9. Итоговые модели
+
+### Базовая модель
 
 Математическая форма модели:
 
 \[
-selling\_price = 83451.7465 * year + 713.0193 * engine - 168464187.6098
+selling\_price =
+83451.7465 * year +
+713.0193 * engine -
+168464187.6098
+\]
+
+---
+
+### Расширенная модель
+
+Математическая форма расширенной модели:
+
+\[
+selling_price = 33628.8721 * year - 35.3377 * engine - 1.4636 * km_driven + 12701.5949 * max_power + 15891.1704 * fuel_CNG - 22699.7847 * fuel_Diesel + 137980.9703 * fuel_LPG - 131172.3560 * fuel_Petrol + 187244.6784 * seller_type_Dealer - 56407.8918 * seller_type_Individual - 130836.7866 * seller_type_TrustmarkDealer + 222623.0404 * transmission_Automatic - 222623.0404 * transmission_Manual - 326174.6441 * owner_FirstOwner - 320531.2738 * owner_FourthAndAboveOwner - 376192.8033 * owner_SecondOwner + 1374871.0308 * owner_TestDriveCar - 351972.3097 * owner_ThirdOwner - 67493025.1438
 \]
